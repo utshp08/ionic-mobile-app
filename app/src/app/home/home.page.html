@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-title>
+        Member Area
+      </ion-title>
+      <ion-buttons start>
+        <button ion-button (click)="logout()">
+          <ion-icon name="log-out"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+  <ion-list-header>
+    Users
+  </ion-list-header>
+  <ion-item *ngFor="let user of users">{{ user.name }}</ion-item>
+</ion-list>
+</ion-content>
