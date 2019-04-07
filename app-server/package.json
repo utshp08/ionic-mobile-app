@@ -9,6 +9,7 @@
   "author": "Reymart Pantonia",
   "license": "MIT",
   "dependencies": {
+    "async": "^2.6.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
@@ -16,6 +17,9 @@
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
     "mongoose": "^5.4.19",
-    "nodemon": "^1.18.10"
+    "nodemailer": "^6.1.0",
+    "nodemailer-express-handlebars": "^3.0.0",
+    "nodemon": "^1.18.10",
+    "postman": "^0.2.0"
   }
 }

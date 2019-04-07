@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from  "@angular/router";
 import { AuthService } from '../auth/auth.service';
-import { AlertController} from 'ionic-angular';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,22 +11,64 @@ import { AlertController} from 'ionic-angular';
 })
 export class LoginPage implements OnInit {
 
-  public loginForm: any;
-  public backgroundImage = 'assets/img/background/background-5.jpg';
+  public logo = "../../assets/iDate.jpg";
+  public loginForm: FormGroup;
 
   constructor(
     private  authService:  AuthService, 
     private  router:  Router,
-    public alertCtrl: AlertController
-    ) { }
+    public alertCtrl: AlertController,
+    public loadingCtrl : LoadingController,
+    public formBuilder : FormBuilder
+    ) {
+
+      this.loginForm = this.formBuilder.group({
+        email: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'), Validators.required])],
+        password: ['', Validators.call([Validators.maxLength(30)])]
+      });
+
+     }
 
   ngOnInit() {
   }
 
-  login(form){
+  async login(form){
+    var loading = await this.loadingCtrl.create({
+      spinner: "bubbles",
+      message: "Please wait...",
+      duration: 3000
+    });
+
+    var err = await this.alertCtrl.create({
+        message: "Invalid Authentication",
+        animated: true,
+        buttons: ["Dismiss"]  
+    });
+
+    await loading.present();
+
     this.authService.login(form.value).subscribe((res)=>{
-      this.router.navigateByUrl('home');
+      loading.onDidDismiss().then(() => {
+        console.log(res.user);
+        console.log(res.status);
+        if(!res.user)
+        {
+          err.message = "Email not yet registered";
+          err.present();
+        } 
+        else 
+        {
+          if(res.status) {
+            this.router.navigateByUrl('home');
+        } 
+        else 
+        {
+          err.message = "Invalid password";
+          err.present();
+        }
+      }
+      });
     });
   }
-    
+  
 }

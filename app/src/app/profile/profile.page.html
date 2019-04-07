@@ -1,0 +1,154 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Complete Profile</ion-title>
+  </ion-toolbar>
+  <ion-progress-bar [value]="(step)"></ion-progress-bar>
+</ion-header>
+
+<ion-content>
+   <form #form="ngForm">
+  <ion-slides >
+
+    <!-- BEST PIC -->
+    <ion-slide >
+      <ion-grid>
+          <ion-row>
+          <ion-col align-self="center">
+              <ion-text font-size="45px"><h2>My best pic is</h2></ion-text>
+            </ion-col>
+          </ion-row>
+        <ion-row>
+        <ion-col align-self="center">
+          <ion-card class="profile-pic">
+              <ion-fab vertical="center" horizontal="center" >
+                <ion-fab-button>
+                    <ion-icon fill="#e81d1d" name="add" (click) = "imageSelect()"></ion-icon>
+                </ion-fab-button>
+              </ion-fab>
+              <ion-thumbnail slot="start">
+                  <ion-img [src]="(profilePic)"></ion-img>
+              </ion-thumbnail>
+          </ion-card>
+      </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col >
+              <ion-button small [disabled] = "notDefaultPic()" (click)="next()">Next</ion-button> <!-- Add flag as clear when button next is click-->
+        </ion-col>
+      </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+    <!-- AGE -->
+    <ion-slide>
+        <ion-grid>
+            <ion-row>
+                <ion-col align-self="center">
+                <ion-text margin-bottom font-size="45px"><h2>I am already</h2></ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+            <ion-col margin-bottom align-self="center">
+                <ion-input type="number"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col align-self="center">
+              <ion-text margin-bottom font-size="45px"><h4>years old</h4></ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col >
+                <ion-button small (click)="prev()"  [disabled]="(lock)">Previous</ion-button>
+                <ion-button small [disabled] = "fieldNotEmpty()" (click)="next()">Next</ion-button> <!-- Add flag as clear when button next is click-->
+            </ion-col>
+          </ion-row>
+          </ion-grid>
+    </ion-slide>
+
+    <!-- GENDER -->
+    <ion-slide>
+        <ion-grid>
+            <ion-row>
+                <ion-col align-self="center">
+                <ion-text margin-bottom font-size="45px"><h2>I am</h2></ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+            <ion-col margin-bottom align-self="center">
+              <div class="gender-toggle">
+                  <ion-text><h3>Boy</h3></ion-text>
+                    <ion-toggle background="#085797" background-checked="#dd2983" ></ion-toggle>
+                  <ion-text><h3>Girl</h3></ion-text>
+                </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col >
+                <ion-button small (click)="prev()"  [disabled]="(lock)">Previous</ion-button>
+                <ion-button small [disabled] = "fieldNotEmpty()" (click)="next()">Next</ion-button> <!-- Add flag as clear when button next is click-->
+            </ion-col>
+          </ion-row>
+          </ion-grid>
+    </ion-slide>
+    
+    <!-- INTERESTED IN -->
+    <ion-slide>
+        <ion-grid>
+            <ion-row>
+                <ion-col align-self="center">
+                <ion-text margin-bottom font-size="45px"><h2>Interested in</h2></ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+            <ion-col margin-bottom align-self="center">
+              <div class="gender-toggle">
+                  <ion-text><h3>Boy</h3></ion-text>
+                    <ion-toggle background="#085797" background-checked="#dd2983" ></ion-toggle>
+                  <ion-text><h3>Girl</h3></ion-text>
+                </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col >
+                <ion-button small (click)="prev()"  [disabled]="(lock)">Previous</ion-button>
+                <ion-button small [disabled] = "fieldNotEmpty()" (click)="next()">Next</ion-button> <!-- Add flag as clear when button next is click-->
+            </ion-col>
+          </ion-row>
+          </ion-grid>
+    </ion-slide>
+
+
+    <!-- LOCATION -->
+    <ion-slide>
+        <ion-grid>
+            <ion-row>
+                <ion-col align-self="center">
+                <ion-text margin-bottom font-size="45px"><h2>Enable location</h2></ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+            <ion-col align-self="center">
+                <div class="gender-toggle">
+                    <ion-fab-button margin-bottom>
+                        <ion-icon fill="#e81d1d" name="compass" (click) = "enableLocation()"></ion-icon>
+                    </ion-fab-button>
+                  </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col >
+                <ion-button small (click)="prev()"  [disabled]="(lock)">Previous</ion-button>
+                <ion-button small [disabled] = "fieldNotEmpty()" (click)="next()">Next</ion-button> <!-- Add flag as clear when button next is click-->
+            </ion-col>
+          </ion-row>
+          </ion-grid>
+    </ion-slide>
+</ion-slides>
+</form>
+</ion-content>
+<ion-footer>
+  <ion-item>
+      <a (click)="next()" >Skip</a>
+  </ion-item>
+</ion-footer>

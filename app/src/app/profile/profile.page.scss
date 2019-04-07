@@ -1,0 +1,37 @@
+.item-inner
+{
+    border: none;
+}
+ion-slide
+{
+    height: 80vh;
+}
+ion-button
+{
+    position: relative;
+    bottom: 10px;
+}
+h2
+{
+    font-size: 35px;
+}
+.profile-pic
+{
+    min-height: 30vh;
+}
+ion-toggle
+{
+    --background: #085797;
+    --background-checked: #dd2983;
+}
+.gender-toggle
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+ion-item
+{
+    border: none!important;
+}

@@ -5,5 +5,8 @@ export interface AuthResponse {
         email: string,
         access_token: string,
         expires_in: number
-    }
+    },
+    message: String,
+    status: boolean
+    
 }

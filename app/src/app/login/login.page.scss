@@ -1,11 +1,61 @@
 ion-item{
-  --background: #3880ff;
-  --color: #fff;
+  --background: transparent;
+  --color: #000;
+  border-bottom: 1px solid #bebebe;
+  margin-bottom: 3px;
+}
+#logo {
+  width: 750px;
+  
+}
+.logo-section, .reset-password-section {
+  text-align: center;
+}
+ion-button{
+  --background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255,131,3,1)), color-stop(1%, rgba(255,131,3,1)), color-stop(100%, rgba(254,110,0,1)));
+  height: 50px;
+  border-radius: 10px;
 }
 
-ion-button{
-  --background: #062f77;
-}
 a{
   color: #fff;
+  text-align: center;
+  font-size: 14px;
+  color: #fe6e00;
+  text-decoration: none;
+}
+
+ion-toolbar {
+  color: #000;
+  font-size: 16px;
+}
+
+.footer-section {
+  align-self: end;
+}
+
+.form-section {
+  padding-bottom: 15px;
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 1px solid #bebebe;
+  border-radius: 10px;
+  align-self: flex-start;
+}
+.gradbackgound {
+  background: linear-gradient(361deg, #f12711, #f5af19, #fc4a1a, #f7b733, #fe8c00, #f83600);
+  background-size: 1800% 1800%;
+  animation: rainbow 15s linear infinite;
+  height: 100%;
+  display: grid;
+}
+@keyframes rainbow {
+  0% {
+    background-position: 0% 0%
+  }
+  50% {
+    background-position: 100% 100%
+  }
+  100% {
+    background-position: 0% 0%
+  }
 }

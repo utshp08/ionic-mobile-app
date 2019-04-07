@@ -12,12 +12,20 @@ import { AuthModule } from  './auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
 import {LoadingController, App, Config, Platform,AlertController, DomController, Keyboard} from 'ionic-angular';
 
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { FormBuilder } from '@angular/forms';
+
+import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [ HttpClientModule, AuthModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
+    Camera,
+    FormBuilder,
+    ImagePicker,
     Keyboard,
     DomController,
     AlertController,

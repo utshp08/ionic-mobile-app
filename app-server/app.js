@@ -1,78 +1,62 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
-const router = express.Router();
 const bodyParser = require('body-parser');
-const bcrypt = require('bcryptjs');
 const app = express();
 const port = process.env.port || 5000;
+const path = require('path');
 
-const SECRET_KEY = "secretkey123";
+// require('./model/user');
+// const User = mongoose.model('User');
 
-require('./model/user');
-const User = mongoose.model('User');
+const  hbs = require('nodemailer-express-handlebars'),
+  email = process.env.MAILER_EMAIL_ID || 'utspantonia@gmail.com',
+  pass = process.env.MAILER_PASSWORD || 'ampogiko@10071414'
+  nodemailer = require('nodemailer');
 
-app.use(cors());
-
-router.use(bodyParser.urlencoded({extended: false}));
-router.use(bodyParser.json());
-
-app.use(router);
-
-//setup routes
-router.get('/', (req, res) => {
-    res.send('asdasd');
-})
-
-router.post('/login', (req, res) => {
-    User.findOne({email: req.body.email}, (err, user) => {
-        if(err) res.status(500).send(err);
-        if(!user)
-        {
-            res.status(404).send("No user found.");
-        }
-        else 
-        {
-            bcrypt.compare(req.body.password, user.password)
-            .then(result => {
-                if(result)
-                {
-                    const  expiresIn  =  24  *  60  *  60;
-                    const  accessToken  =  jwt.sign({ id:  user.id }, SECRET_KEY, {
-                            expiresIn:  expiresIn
-                    });
-                    res.status(200).send({"user" : user, "access_token" : accessToken, "expires_in" : expiresIn});
-                }
-            })
-        }
-    })
+const smtpTransport = nodemailer.createTransport({
+  service: process.env.MAILER_SERVICE_PROVIDER || 'Gmail',
+  auth: {
+    user: email,
+    pass: pass
+  }
 });
 
-router.get('/login', (req, res) => {
-    console.log(req.body);
+const handlebarsOptions = {
+  viewEngine: 'handlebars',
+  viewPath: path.resolve('/templates/'),
+  extName: '.html'
+};
+
+smtpTransport.use('compile', hbs(handlebarsOptions));
+
+
+
+app.use(function(req, res, next)
+{
+   /* Allow access from any requesting client */
+   res.setHeader('Access-Control-Allow-Origin', '*');
+
+   /* Allow access for any of the following Http request types */
+   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT');
+
+   /* Set the Http request header */
+   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Authorization');
+    next();
 });
 
-router.post('/register', (req, res) => {
-    newUser = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password)
-    })
-    .save()
-    .then(user => {
-        console.log('New user saved!');
-        res.status(200).send({"user": user});
-    })
-    .catch(err => res.status(404).send(err));
-});
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
-router.get('/register', (req, res) => {
-    console.log(req.body);
-});
+//load routes
+const auth = require('./routes/auth/AuthRoutes');
+
+app.use(auth);
 
 //Setup mongodb database with mongoose module
-mongoose.connect('mongodb+srv://utspantonia:secret123@cluster0-oguaj.mongodb.net/ifinder?retryWrites=true',
+//'mongodb+srv://utspantonia:secret123@cluster0-oguaj.mongodb.net/ifinder?retryWrites=true'
+//mongodb://localhost:27017/ionic-app
+mongoose.connect('mongodb://localhost:27017/ionic-app',
 {
     useNewUrlParser: true
 })

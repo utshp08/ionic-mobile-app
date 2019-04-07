@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "infinder-app"
+		},
+		{
+			"path": "app-server"
+		},
+		{
+			"path": "app"
+		}
+	],
+	"settings": {}
+}

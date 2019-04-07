@@ -1,11 +1,40 @@
 ion-item{
-    --background: #3880ff;
-    --color: #fff;
+    --background: transparent;
+    --color: #000;
+    font-size: 14px;
 }
-
+h3 {
+    color: #000;
+}
 ion-button{
-    --background: #062f77;
+    --background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255,131,3,1)), color-stop(1%, rgba(255,131,3,1)), color-stop(100%, rgba(254,110,0,1)));
 }
 ion-header {
     --background: transparent;
 }
+
+ion-toolbar,
+ion-header {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.test {
+    background: linear-gradient(316deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+    background-size: 1800% 1800%;
+    animation: rainbow 30s linear infinite;
+    height: 100%;
+    display: grid;
+  }
+  @keyframes rainbow {
+    0% {
+      background-position: 0% 0%
+    }
+    50% {
+      background-position: 100% 100%
+    }
+    100% {
+      background-position: 0% 0%
+    }
+  }
+  
