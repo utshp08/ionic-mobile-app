@@ -37,6 +37,9 @@ exports.login = (req, res) => {
             }
         })
 };
+exports.login_index = (req, res) => {
+  res.send('Login Index');
+}
 
 exports.register = (req, res) => {
         status = false;

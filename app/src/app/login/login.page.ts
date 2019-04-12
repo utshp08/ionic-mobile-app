@@ -47,28 +47,24 @@ export class LoginPage implements OnInit {
 
     await loading.present();
 
-    this.authService.login(form.value).subscribe((res)=>{
+    this.authService.login(form.value).then((res)=>{
       loading.onDidDismiss().then(() => {
-        console.log(res.user);
-        console.log(res.status);
-        if(!res.user)
+        console.log(res);
+        console.log(res);
+        if(!res)
         {
           err.message = "Email not yet registered";
           err.present();
         } 
         else 
         {
-          if(res.status) {
-            this.router.navigateByUrl('home');
-        } 
-        else 
-        {
           err.message = "Invalid password";
           err.present();
         }
-      }
       });
     });
+
+    // this.authService.login(form.value).then(res => console.log(res));
   }
   
 }
