@@ -56,9 +56,7 @@ export class RegisterPage implements OnInit {
             err.message = JSON.stringify(res.message);
             err.present();
           }
-          else {
             this.router.navigateByUrl('profile');
-          }
         }
       })
     });

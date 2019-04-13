@@ -12,7 +12,7 @@ import { AuthResponse } from  './auth-response';
 })
 export class AuthService {
 
-AUTH_SERVER_ADDRESS:  string  =  'http://192.168.0.11:5000';
+AUTH_SERVER_ADDRESS:  string  =  'https://app-ionic-server.herokuapp.com';
 authSubject  =  new  BehaviorSubject(false);
 
   constructor(private  httpClient:  HttpClient, private  storage:  Storage)

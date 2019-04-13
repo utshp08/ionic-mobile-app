@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProfileSchema = new Schema({
-    AvatarUrl: {
-        type: String,
+    ProfileURI: {
+        type: mongoose.Schema.Types.ObjectId('Image'),
         required: false
     },
     Age: {

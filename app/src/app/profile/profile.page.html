@@ -19,15 +19,13 @@
           </ion-row>
         <ion-row>
         <ion-col align-self="center">
-          <ion-card class="profile-pic">
+          <ion-card class="profile-pic" padding>
               <ion-fab vertical="center" horizontal="center" >
-                <ion-fab-button>
-                    <ion-icon fill="#e81d1d" name="add" (click) = "imageSelect()"></ion-icon>
+                <ion-fab-button *ngIf="!base64Image">
+                    <ion-icon fill="#e81d1d" name="add" (click) = "imageSelect()"  ></ion-icon>
                 </ion-fab-button>
               </ion-fab>
-              <ion-thumbnail slot="start">
-                  <ion-img [src]="(profilePic)"></ion-img>
-              </ion-thumbnail>
+                  <img class="profile" [src]="base64Image" *ngIf="base64Image" vertical="center" horizontal="center" (click)="imageSelect()"/>
           </ion-card>
       </ion-col>
       </ion-row>

@@ -16,6 +16,9 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { FormBuilder } from '@angular/forms';
 
 import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
 
 
 @NgModule({
@@ -23,6 +26,10 @@ import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
   entryComponents: [],
   imports: [ HttpClientModule, AuthModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
+    HTTP,
+    FileTransfer, 
+    FileTransferObject,
+    WebView,
     Camera,
     FormBuilder,
     ImagePicker,
