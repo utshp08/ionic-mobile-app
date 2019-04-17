@@ -22,7 +22,7 @@ export class ProfilePage implements OnInit {
    };
    lock = false;
 
-   public SERVER_ADDRESS = "http://192.168.0.10:5000"
+   public SERVER_ADDRESS = "https://app-ionic-server.herokuapp.com"
    public step : number =  0.2;
    public default: string = "../../assets/icon/avatar.png";
    public profilePic;
@@ -156,21 +156,21 @@ fieldNotEmpty()
   return false
 }
 
-next() {
-  this.slides.lockSwipes(false);
-  this.slides.slideNext(500).then(()=>{
-    this.step += 0.2;
-    this.slides.lockSwipes(true);
-  });
-}
+next() {  
+    this.slides.lockSwipes(false);  
+    this.slides.slideNext(500).then(()=>{
+        this.step += 0.2;
+        this.slides.lockSwipes(true);
+    });
+  }
 prev()
 {
-  this.slides.lockSwipes(false);
-  this.slides.slidePrev(500).then(()=>{
-    this.step -= 0.2;
-    this.slides.lockSwipes(true);
-  });
-}
+    this.slides.lockSwipes(false);
+    this.slides.slidePrev(500).then(()=>{
+      this.step -= 0.2;
+      this.slides.lockSwipes(true);
+    });
+  }
 
 goToFinish() {
 }    

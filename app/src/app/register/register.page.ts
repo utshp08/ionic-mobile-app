@@ -50,13 +50,13 @@ export class RegisterPage implements OnInit {
       loading.onDidDismiss().then(() => {
         if(res.user)
         {
-          console.log(res.status)
           if(!res.status)
           {
             err.message = JSON.stringify(res.message);
             err.present();
-          }
+          } else {
             this.router.navigateByUrl('profile');
+          }
         }
       })
     });

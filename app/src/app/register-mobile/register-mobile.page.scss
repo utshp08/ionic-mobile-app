@@ -1,0 +1,31 @@
+
+.text-align-center
+{
+    text-align: center;
+}
+*{
+    color: #ffffff;
+}
+ion-toolbar {
+    --background: transparent;
+    --border-width: 0;
+    }
+.gradbackgound {
+    background: linear-gradient(361deg, #f12711, #f5af19, #fc4a1a, #f7b733, #fe8c00, #f83600);
+    background-size: 1800% 1800%;
+    animation: rainbow 20s linear infinite;
+    height: 100%;
+    display: block;
+}
+  @keyframes rainbow {
+    0% {
+      background-position: 0% 0%
+    }
+    50% {
+      background-position: 100% 100%
+    }
+    100% {
+      background-position: 0% 0%
+    }
+  }
+  

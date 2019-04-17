@@ -1,0 +1,72 @@
+ion-slide{
+  width: 100%;
+  height: 70vh;
+}
+  #logo {
+    width: 750px;
+  }
+  .logo-section, .reset-password-section {
+    text-align: center;
+  }
+  
+
+  div.kv
+  {
+    min-height: 120px;
+    background: #333333;
+  }
+
+  a{
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    color: #fe6e00;
+    text-decoration: none;
+  }
+  
+  ion-toolbar {
+    color: #000;
+    font-size: 16px;
+  }
+
+  ion-text
+  {
+      color: #ececec;
+  }
+
+  .hr
+  {
+      min-height: 10px;
+      border-top: 1px solid #cccccc;
+  }
+
+  .footer-section {
+    align-self: end;
+  }
+  
+  .form-section {
+    padding-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.75);
+    border: 1px solid #bebebe;
+    border-radius: 10px;
+    align-self: flex-start;
+  }
+  .gradbackgound {
+    background: linear-gradient(361deg, #f12711, #f5af19, #fc4a1a, #f7b733, #fe8c00, #f83600);
+    background-size: 1800% 1800%;
+    animation: rainbow 20s linear infinite;
+    height: 100%;
+    display: block;
+  }
+  @keyframes rainbow {
+    0% {
+      background-position: 0% 0%
+    }
+    50% {
+      background-position: 100% 100%
+    }
+    100% {
+      background-position: 0% 0%
+    }
+  }
+  

@@ -49,8 +49,6 @@ export class LoginPage implements OnInit {
 
     this.authService.login(form.value).subscribe((res)=>{
       loading.onDidDismiss().then(() => {
-        console.log(res.user);
-        console.log(res.status);
         if(!res.user)
         {
           err.message = "Email not yet registered";
