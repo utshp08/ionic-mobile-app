@@ -6,8 +6,27 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #ff7400;
 }
+
+.gradbackgound {
+  background: linear-gradient(361deg, #f12711, #f5af19, #fc4a1a, #f7b733, #fe8c00, #f83600);
+  background-size: 1800% 1800%;
+  animation: rainbow 10s linear infinite;
+  height: 100%;
+  display: grid;
+}
+@keyframes rainbow {
+  0% {
+    background-position: 0% 0%
+  }
+  50% {
+    background-position: 100% 100%
+  }
+  100% {
+    background-position: 0% 0%
+  }
+}
+
 .spinner {
     margin: 130px auto;
     width: 60px;

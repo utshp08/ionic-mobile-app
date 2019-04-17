@@ -21,6 +21,7 @@
     "nodemailer": "^6.1.0",
     "nodemailer-express-handlebars": "^3.0.0",
     "nodemon": "^1.18.10",
-    "postman": "^0.2.0"
+    "postman": "^0.2.0",
+    "sendotp": "^1.2.9"
   }
 }

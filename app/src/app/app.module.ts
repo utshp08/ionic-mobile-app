@@ -5,23 +5,20 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { HTTP } from  '@ionic-native/http/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from  './auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
-import {LoadingController, App, Config, Platform,AlertController, DomController, Keyboard, ToastController} from 'ionic-angular';
+import {LoadingController, App, Config, Platform,AlertController, DomController, Keyboard} from 'ionic-angular';
 
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { FormBuilder } from '@angular/forms';
 
 import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
-
-
-import { File } from '@ionic-native/file/ngx';
-import {FilePath} from '@ionic-native/file-path/ngx';
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
 
 
 @NgModule({
@@ -29,11 +26,10 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
   entryComponents: [],
   imports: [ HttpClientModule, AuthModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
-    ToastController,
-    File,
-    FilePath,
-    FileTransfer,
     HTTP,
+    FileTransfer, 
+    FileTransferObject,
+    WebView,
     Camera,
     FormBuilder,
     ImagePicker,

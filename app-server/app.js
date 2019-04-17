@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 3000;
 const path = require('path');
+const SendOtp = require('sendotp');
 
 app.use(cors());
 app.use(function(req, res, next)
@@ -40,7 +41,27 @@ mongoose.connect('mongodb+srv://utspantonia:secret123@cluster0-oguaj.mongodb.net
 })
 .catch(err => console.log(err));
 
+const sendOtp = new SendOtp('1184A80zLSlRvBLD5cb6406f');
 
+app.post('/otp-idate', (req, res) => {
+    
+    if(req.receiver)
+    {
+        sendOtp.send(req.receiver, senderId, () => {
+            res.send(`OTP has been sent to ${req.receiver}`)
+        })
+    }
+})
+
+app.set('view engine', 'html');
+
+
+app.get('/otp', (req,res) => {
+    res.render('/otp-idate');
+})
+// sendOtp.send(contactNumber, senderId, otp, callback); //otp is optional if not sent it'll be generated automatically
+// sendOtp.retry(contactNumber, retryVoice, callback);
+// sendOtp.verify(contactNumber, otpToVerify, callback);
 
 //Launch server
 app.listen(port, () => {
