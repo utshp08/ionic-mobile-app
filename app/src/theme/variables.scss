@@ -5,21 +5,29 @@
 :root {
 
   --ion-color-button-primary: #ffffff;
-  --ion-color-button-primary-contrast: #f12711;
+  --ion-color-button-primary-contrast: #F24058;
   --ion-color-button-primary-invert: transparent;
   --ion-color-button-primary-invert-contrast: #ffffff;
   
+  
+  --ion-color-gender: #ffffff;
+  --ion-color-gender-contrast: #dd2983;
+
+  
+  --ion-color-gender-active: #dd2983;
+  --ion-color-gender-active-contrast: #ffffff;
+
 
   /** primary **/
   --ion-color-primary: #ffffff;
   --ion-color-primary-rgb: 56, 128, 255;
-  --ion-color-primary-contrast: #e81d1d;
+  --ion-color-primary-contrast: #F24058;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #3171e0;
   --ion-color-primary-tint: #4c8dff;
 
   /** secondary **/
-  --ion-color-secondary: linear-gradient(316deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  --ion-color-secondary: linear-gradient(316deg, #F24058, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
   --ion-color-secondary-rgb: 12, 209, 232;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;

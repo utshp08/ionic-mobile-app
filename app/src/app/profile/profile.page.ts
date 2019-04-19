@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import {IonSlides, ActionSheetController, AlertController, LoadingController } from '@ionic/angular';
+import {IonSlides, ActionSheetController, AlertController, LoadingController, IonFab, IonFabButton } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, MaxLengthValidator } from '@angular/forms';
 import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { ImageProviderService } from '../image-provider.service';
+import { FabButton } from 'ionic-angular';
 
 @Component({
   selector: 'app-profile',
@@ -16,6 +17,7 @@ import { ImageProviderService } from '../image-provider.service';
 export class ProfilePage implements OnInit {
 
   @ViewChild(IonSlides) slides: IonSlides;
+  @ViewChild(IonFabButton) fabButton: IonFabButton;
   slideOpts = { 
     effect: 'flip', 
     pager: 'true'
@@ -28,6 +30,9 @@ export class ProfilePage implements OnInit {
    public profilePic;
    public registerForm: FormGroup;
    public uploaded = false;
+   public genderType;
+   public male:String;
+   public female:String;
    
   public base64Image: string;
 
@@ -47,10 +52,24 @@ export class ProfilePage implements OnInit {
 
   }
   
-  
+chooseGender(gender:String){
+  this.genderType = gender;
+  switch(this.genderType)
+  {
+    case "Male":
+      this.male = "gender-active";
+      this.female = "gender";
+      break;
+    case "Female":
+      this.female = "gender-active";
+      this.male = "gender";
+  }
+}
+
+
 ngAfterViewInit() {
   // child is set
-  this.slides.lockSwipes(true);
+  //this.slides.lockSwipes(true);
 }
 
 async showLoading(msg: any)
