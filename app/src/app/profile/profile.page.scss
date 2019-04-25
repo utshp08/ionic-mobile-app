@@ -1,55 +1,89 @@
-.item-inner
-{
+.picker-opt-selected{
+    color: #F24058!important;
+}
+.item-inner{
     border: none;
 }
-ion-slide
-{
+ion-slide{
     height: 80vh;
 }
-ion-button
-{
-    position: relative;
-    bottom: 10px;
-}
-h2
-{
+h2{
     font-size: 35px;
 }
-.profile-pic
-{
-    min-height: 30vh;
+.main{
+    position: relative;
+    text-align: center;
 }
-ion-toggle
-{
+.photo-wrapper{
+    position: absolute;
+    top: -75px;
+    margin: auto;
+    align-self: center;
+    width: 100%
+}
+.spacer{
+    min-height: 150px;
+    background: linear-gradient(155.21deg, #F78340 0%, #F24058 100%);
+}
+.pic-card{
+    height: 150px;
+    width: 150px;
+    margin: auto;
+    border-radius: 100%;
+    background: #ffffff;
+}
+ion-toggle{
     --background: #085797;
     --background-checked: #dd2983;
 }
-.gender-toggle
-{
+.gender-toggle{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
-ion-item
-{
-    border: none!important;
-}
 img.profile
 {
     border-radius: 100%;
-    box-shadow: 2px 2px 2px #454545;
 }
-ion-fab
-{
+ion-fab{
     min-height: 20dpi;
     min-width: 20dpi;
 }
-ion-fab-button
-{
+ion-fab-button.gender-select{
     background: #ffffff;
 }
-ion-icon
-{
+ion-icon{
     color: #dd2983;
 }
+
+
+ion-item{
+    background: rgba(255,255,255,0.6);
+    border-radius: 30px;
+    text-align: start;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+
+.gender-select>ion-icon{
+    color: inherit !important;
+}
+// .gender-select.active
+// {
+//     --background: #dd2983;
+// }
+// .gender-select.active>ion-icon{
+//     color: #ffffff !important;
+// }
+ion-header {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+  }
+  ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+  }
+  ion-content{
+    position: initial;
+  }

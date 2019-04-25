@@ -19,22 +19,23 @@ ion-header {
   background-color: transparent !important;
 }
 
+
 .test {
-    background: linear-gradient(316deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+    background: linear-gradient(155.21deg, #F78340 0%, #F24058 100%);
     background-size: 1800% 1800%;
     animation: rainbow 30s linear infinite;
     height: 100%;
     display: grid;
   }
-  @keyframes rainbow {
-    0% {
-      background-position: 0% 0%
-    }
-    50% {
-      background-position: 100% 100%
-    }
-    100% {
-      background-position: 0% 0%
-    }
-  }
+  // @keyframes rainbow {
+  //   0% {
+  //     background-position: 0% 0%
+  //   }
+  //   50% {
+  //     background-position: 100% 100%
+  //   }
+  //   100% {
+  //     background-position: 0% 0%
+  //   }
+  // }
   

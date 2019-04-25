@@ -1,13 +1,15 @@
-<ion-header >
- <ion-toolbar>
-    <ion-back-button icon="undo" text=""></ion-back-button>
+<ion-header no-border >
+ <ion-toolbar >
+    <ion-back-button icon="undo" text="Back" color="primary"></ion-back-button>
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
-  <div class="gradbackgound">
-    <ion-grid>
+  <div class="gradbackgound" padding >
+    <ion-slides [options] = "slideOpts">
+      <ion-slide>
+    <ion-grid padding>
       <ion-row>
-        <ion-col align-self-center>
+        <ion-col align-self-center >
           <div class="text-align-center">
           <ion-text >Please enter your</ion-text>
           <ion-text><h2>Mobile Number</h2></ion-text>
@@ -16,10 +18,92 @@
       </ion-row>
       
       <ion-row>
-          <ion-col>
-            <ion-input type="number" required shapre="round"></ion-input>
+          <ion-col padding-top margin-top >
+                  <ion-input type="number" required placeholder="999 000 0000" [(ngModel)]="phonenumber">
+              <ion-chip >
+                  <ion-select  placeholder="" [(ngModel)]="countrycode">
+                      <ion-select-option value="f">Female</ion-select-option>
+                      <ion-select-option value="m">Male</ion-select-option>
+                    </ion-select>
+              </ion-chip>
+                  </ion-input>
           </ion-col>
         </ion-row>
+
+        
+      <ion-row>
+        <ion-col padding-top margin-top >
+          <ion-text  font-size="6px">
+            <div class="disclaimer">
+              By clicking "Continue", idate will send a text with<br/>
+              verification code. Message and data may apply. The<br/>
+              verified phone number can be used to login<br/>
+              <strong><u>Learn what happens when your number changes.</u></strong>
+            </div>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col padding-top margin-top >
+            <ion-button shape="round" fill="outline" expand="full" (click)="sendOtp()">Continue</ion-button>
+        </ion-col>
+      </ion-row>
     </ion-grid>
+  </ion-slide>
+
+
+  <ion-slide>
+      <ion-grid padding>
+          <ion-row>
+            <ion-col align-self-center >
+              <div class="text-align-center">
+              <ion-text >Enter the code that was sent to</ion-text>
+              <h2><ion-text>{{countrycode}} {{phonenumber}}</ion-text></h2>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+              <ion-col padding-top margin-top >
+                  <ion-input type="number" #otpcode required class="text-align-center" length="4"></ion-input>
+              </ion-col>
+            </ion-row>
+    
+    
+          <ion-row>
+            <ion-col padding-top margin-top >
+                <ion-button shape="round" fill="outline" expand="full" (click)="save()">Continue</ion-button>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col padding-top margin-top >
+                <h3>
+                <ion-text>
+                  <div class="text-align-center">
+                    <a (click)="gotoPrev()">I didn't get a code</a>
+                  </div>
+                </ion-text>
+              </h3>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col padding-top margin-top >
+                  <ion-text  font-size="6px">
+                    <div class="disclaimer">
+                      By clicking "Continue", idate will send a text with<br/>
+                      verification code. Message and data may apply. The<br/>
+                      verified phone number can be used to login<br/>
+                      <strong><u>Learn what happens when your number changes.</u></strong>
+                    </div>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
+        </ion-grid>
+            
+  </ion-slide>
+  </ion-slides>
   </div>
 </ion-content>

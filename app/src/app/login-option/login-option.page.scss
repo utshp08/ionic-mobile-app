@@ -9,6 +9,9 @@ ion-slide{
     text-align: center;
   }
   
+  ion-button  {
+    height: 50px;
+  }
 
   div.kv
   {
@@ -52,21 +55,21 @@ ion-slide{
     align-self: flex-start;
   }
   .gradbackgound {
-    background: linear-gradient(361deg, #f12711, #f5af19, #fc4a1a, #f7b733, #fe8c00, #f83600);
+    background: linear-gradient(155.21deg, #F78340 0%, #F24058 100%);
     background-size: 1800% 1800%;
     animation: rainbow 20s linear infinite;
     height: 100%;
     display: block;
   }
-  @keyframes rainbow {
-    0% {
-      background-position: 0% 0%
-    }
-    50% {
-      background-position: 100% 100%
-    }
-    100% {
-      background-position: 0% 0%
-    }
-  }
+  // @keyframes rainbow {
+  //   0% {
+  //     background-position: 0% 0%
+  //   }
+  //   50% {
+  //     background-position: 100% 100%
+  //   }
+  //   100% {
+  //     background-position: 0% 0%
+  //   }
+  // }
   

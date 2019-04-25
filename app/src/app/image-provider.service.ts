@@ -17,6 +17,7 @@ export class ImageProviderService {
 
 uploadPic(path)
 {
+  console.log(path);
   let url = this.SERVER_ADDRESS + '/images';
   var targetPath = path;
   var opts:FileUploadOptions = {

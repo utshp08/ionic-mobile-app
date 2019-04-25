@@ -96,6 +96,14 @@
     <plugin name="cordova-plugin-telerik-imagepicker" spec="2.3.2" />
     <plugin name="cordova-plugin-camera" spec="4.0.3" />
     <plugin name="cordova-plugin-advanced-http" spec="2.0.8" />
+    <plugin name="cordova-plugin-facebook4" spec="4.2.1">
+        <variable name="APP_ID" value="2007325436239979" />
+        <variable name="APP_NAME" value="dating-app" />
+        <variable name="FACEBOOK_HYBRID_APP_EVENTS" value="false" />
+        <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="4.40.0" />
+    </plugin>
+    <plugin name="cordova-plugin-nativestorage" spec="2.3.2" />
+    <allow-navigation href="http://192.168.0.12:8100" sessionid="f4a352ba" />
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="^7.1.4" />
 </widget>

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from  '@angular/common/http';
 import { tap } from  'rxjs/operators';
 import { Observable, BehaviorSubject } from  'rxjs';
-
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { Storage } from  '@ionic/storage';
 import { User } from  './user';
 import { AuthResponse } from  './auth-response';
@@ -12,10 +13,15 @@ import { AuthResponse } from  './auth-response';
 })
 export class AuthService {
 
-AUTH_SERVER_ADDRESS:  string  =  'https://app-ionic-server.herokuapp.com';
+// AUTH_SERVER_ADDRESS:  string  =  'https://app-ionic-server.herokuapp.com' ;
+AUTH_SERVER_ADDRESS:  string  =  'http://192.168.0.15:3000' ;
 authSubject  =  new  BehaviorSubject(false);
 
-  constructor(private  httpClient:  HttpClient, private  storage:  Storage)
+  constructor(
+  private httpClient    : HttpClient, 
+  private storage       : Storage,
+  private nativeStorage : NativeStorage,
+  private fb            : Facebook)
   {
 
   }
@@ -46,6 +52,44 @@ authSubject  =  new  BehaviorSubject(false);
 
     );
   }
+
+  loginWithFacebook() : Promise<any> {
+    return new Promise((resolve, reject) => {
+      const permission = ['public_profile', 'email'];
+      this.fb.login(permission)
+        .then((fbres: FacebookLoginResponse) => {
+            // this.showAlert("Loading. Please wait...");
+          let userID = fbres.authResponse.userID;
+          this.fb.api("/me?fields=name,email", permission)
+          .then(res => {
+              res.picture = "https://graph.facebook.com/" + userID + "/picture?type=large";
+              res.logs = "https://graph.facebook.com/" + userID;
+              
+              let user = {
+                id : userID,
+                name : res.name,
+                picture: res.picture,
+                email: res.email,
+                provider: "facebook"
+              }
+
+              resolve(user);
+          })
+          .catch(err => {
+            reject(err);
+          });
+          this.fb.logEvent(this.fb.EVENTS.EVENT_NAME_ADDED_TO_CART);
+      });
+    })
+  }
+
+  CreateOrRetrieveUser (user) : Observable<any> {
+        return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/user/${user.id}`, user).pipe(
+          tap(async (res:any) => {
+            this.authSubject.next(res);
+          })
+        );
+   }
 
   async logout() {
     await this.storage.remove("ACCESS_TOKEN");

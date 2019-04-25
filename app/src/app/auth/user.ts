@@ -2,5 +2,10 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    password: string;
+    gender: string;
+    birthday: Date;
+    auth_type:
+    {
+        type: string;
+    }
 }

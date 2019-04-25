@@ -1,0 +1,29 @@
+{
+  "name": "ionic-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Reymart Pantonia",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.6.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.4.19",
+    "multer": "^1.4.1",
+    "nodemailer": "^6.1.0",
+    "nodemailer-express-handlebars": "^3.0.0",
+    "nodemon": "^1.18.10",
+    "postman": "^0.2.0",
+    "request": "^2.88.0"
+  }
+}

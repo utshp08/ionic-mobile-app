@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import {IonSlides, ActionSheetController, AlertController, LoadingController } from '@ionic/angular';
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
-import { DomSanitizer } from '@angular/platform-browser';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
+import {IonSlides, ActionSheetController, AlertController, LoadingController, IonFab, IonFabButton } from '@ionic/angular';
+import { FormBuilder, Validators, FormGroup, MaxLengthValidator } from '@angular/forms';
 import { ImageProviderService } from '../image-provider.service';
+import {ImageService } from '../providers/image.service';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Router } from '@angular/router';
+import { UserService } from '../providers/user/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,6 +16,8 @@ import { ImageProviderService } from '../image-provider.service';
 export class ProfilePage implements OnInit {
 
   @ViewChild(IonSlides) slides: IonSlides;
+  @ViewChild(IonFabButton) fabButton: IonFabButton;
+
   slideOpts = { 
     effect: 'flip', 
     pager: 'true'
@@ -28,29 +30,71 @@ export class ProfilePage implements OnInit {
    public profilePic;
    public registerForm: FormGroup;
    public uploaded = false;
-   
+   public genderType;
+   public male:String;
+   public female:String;
+
   public base64Image: string;
+  public name:String;
+  public email:String;
+  public sex:String;
+  public bday:Date
+  private provider:String;
 
   constructor(
     public actionSheet: ActionSheetController,
-    public imagePicker: ImagePicker,
+    // public imagePicker: ImagePicker,
     public formBuilder : FormBuilder,
-    public camera: Camera,
+    // public camera: Camera,
     public alertCtl : AlertController,
-    public webview : WebView,
+    // public webview : WebView,
     private imageProvider: ImageProviderService,
-    private loadingCtl : LoadingController
+    private loadingCtl : LoadingController,
+    private nativeStorage: NativeStorage,
+    private router: Router,
+    private imgService: ImageService,
+    private userService: UserService
     )
-    { }
+    {
+      this.nativeStorage.getItem('facebook_user')
+      .then(data => {
+        this.base64Image = data.picture;
+        this.name = data.name;
+        this.email = data.email;
+        this.sex = data.sex,
+        this.bday = data.bday
+        this.provider = "facebook"
+        console.log(data);
+        this.uploaded = true;
+      })
+      .catch(err => {
+        this.router.navigate(["/login-option"])
+      })
+    }
 
   ngOnInit() {
-
+    this.male = "tertiary";
+    this.female = "tertiary";
   }
-  
-  
+
+chooseGender(gender:String){
+  this.genderType = gender;
+  switch(this.genderType)
+  {
+    case "Male":
+      this.male = "secondary";
+      this.female = "tertiary";
+      break;
+    case "Female":
+      this.female = "secondary";
+      this.male = "tertiary";
+  }
+}
+
+
 ngAfterViewInit() {
   // child is set
-  this.slides.lockSwipes(true);
+  //this.slides.lockSwipes(true);
 }
 
 async showLoading(msg: any)
@@ -78,37 +122,6 @@ async showErr(msg)
   alert.present();
 }
 
-private options: CameraOptions = {
-  quality: 100,
-  destinationType: this.camera.DestinationType.FILE_URI,
-  encodingType: this.camera.EncodingType.JPEG,
-  mediaType: this.camera.MediaType.PICTURE,
-  saveToPhotoAlbum: true,
-  allowEdit: true,
-  targetWidth: 280,
-  targetHeight: 280
-}
-
-async showImageFromCamera() {
-  try {
-    let rawImageFile = await this.getFilePathFromCamera();
-    this.base64Image = this.webview.convertFileSrc(rawImageFile);
-    this.showLoading("Uploading image")
-    this.imageProvider.uploadPic(rawImageFile).then(img => {
-      this.uploaded = true;
-      this.dismissLoading();
-    });
-  } catch(error) {
-    console.log(error);
-  }
-}
-
-async getFilePathFromCamera() {
-  const imagePath: string = await this.camera.getPicture(this.options);
-  console.log(imagePath);
-  return imagePath;
-}
-
 async imageSelect()
 {
   var as = await this.actionSheet.create({
@@ -117,62 +130,84 @@ async imageSelect()
       text: 'Select from gallery',
       handler: () => 
       {
-        // open gallery to select image
-        this.imagePicker.getPictures({
-          quality: 100,
-          maximumImagesCount: 1,
-          width: 280,
-          height: 280
-        }).then((results) => {
-          for (var i = 0; i < results.length; i++) {
-            console.log('Image URI: ' + results[i]);
-            this.base64Image = this.webview.convertFileSrc(results[i]);
-            this.showLoading("Uploading image")
-            this.imageProvider.uploadPic(results[i]).then(img => {
-              this.uploaded = true;
-                this.dismissLoading();
-            });
-        }
-        }).catch(err => {})
+        //Load image service that handles operation for selecting images from the gallery
+        this.imgService.loadImageFromGallery().then(data => {
+          this.base64Image = data.image;
+          //Image provider handles uploading of images to the server
+          this.imageProvider.uploadPic(data.filepath)
+          .then(() => {
+            this.showLoading("Uploading image");
+            this.uploaded = true;
+            console.log("uploaded")
+            this.dismissLoading();
+          })   
+        });
       }
     }, {
       text: 'Use Camera',
       handler: () => {
         //open camera
-        this.showImageFromCamera();
+        // this.showImageFromCamera();
+        this.imgService.showImageFromCamera()
+        .then(data => {
+          this.base64Image = data.image;
+
+          this.showLoading("Uploading image");
+
+          this.imageProvider.uploadPic(data.filepath)
+          .then(()=>{
+            this.uploaded = true;
+            console.log("uploaded")
+            this.dismissLoading();
+          });
+        })
       }
     }]
   });
   await as.present();
 }
 
-notDefaultPic()
+saveNewUser()
 {
-  return false
+  this.userService.saveNewUser({
+    name: this.name,
+    email: this.email,
+    picture: this.base64Image,
+    gender: this.genderType,
+    birthday: this.bday,
+    provider: this.provider
+  }).subscribe(res => {
+    console.log(res);
+  })
 }
 
-fieldNotEmpty()
-{
-  return false
-}
+// notDefaultPic()
+// {
+//   return false
+// }
 
-next() {  
-    this.slides.lockSwipes(false);  
-    this.slides.slideNext(500).then(()=>{
-        this.step += 0.2;
-        this.slides.lockSwipes(true);
-    });
-  }
-prev()
-{
-    this.slides.lockSwipes(false);
-    this.slides.slidePrev(500).then(()=>{
-      this.step -= 0.2;
-      this.slides.lockSwipes(true);
-    });
-  }
+// fieldNotEmpty()
+// {
+//   return false
+// }
 
-goToFinish() {
-}    
+// next() {  
+//     this.slides.lockSwipes(false);  
+//     this.slides.slideNext(500).then(()=>{
+//         this.step += 0.2;
+//         this.slides.lockSwipes(true);
+//     });
+//   }
+// prev()
+// {
+//     this.slides.lockSwipes(false);
+//     this.slides.slidePrev(500).then(()=>{
+//       this.step -= 0.2;
+//       this.slides.lockSwipes(true);
+//     });
+//   }
+
+// goToFinish() {
+// }    
 
 }

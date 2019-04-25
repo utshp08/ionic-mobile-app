@@ -19,13 +19,17 @@ import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
-
+import { HttpModule } from '@angular/http';
+import { Facebook } from '@ionic-native/facebook/ngx';
+import {NativeStorage} from '@ionic-native/native-storage/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [ HttpClientModule, AuthModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [HttpModule, HttpClientModule, AuthModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
+    NativeStorage,
+    Facebook,
     HTTP,
     FileTransfer, 
     FileTransferObject,
@@ -47,3 +51,5 @@ import { HTTP } from '@ionic-native/http/ngx';
   bootstrap: [AppComponent]
 })
 export class AppModule {}
+
+
