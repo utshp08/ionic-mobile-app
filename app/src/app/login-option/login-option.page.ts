@@ -66,22 +66,24 @@ export class LoginOptionPage implements OnInit {
     this.authService.loginWithFacebook()
     .then(res => {
       let user = {
-        id: res.id,
         name: res.name,
         email: res.email,
         picture: res.picture,
         sex: res.user_gender,
         bday: res.user_birthday,
-        provider: res.provider
+        provider: {
+          id: res.id,
+          type: res.provider
+        }
       }
-      this.nativeStorage.setItem('facebook_user', user);
       this.authService.CreateOrRetrieveUser(user).subscribe(res => {
         console.log(res.status)
-        if(!res.status)
+        if(!res.authenticated)
         {
           this.route.navigate(["/profile"]);
         } else {
           this.route.navigate(["/login"]);
+          this.nativeStorage.setItem('login_user', user);
         }
       })
     })

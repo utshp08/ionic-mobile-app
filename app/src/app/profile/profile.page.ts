@@ -56,7 +56,7 @@ export class ProfilePage implements OnInit {
     private userService: UserService
     )
     {
-      this.nativeStorage.getItem('facebook_user')
+      this.nativeStorage.getItem('login_user')
       .then(data => {
         this.base64Image = data.picture;
         this.name = data.name;

@@ -11,6 +11,9 @@ module.exports = {
 function facebookAuth(req, res, next) {
 
   req.authObject = req.body;
+  req.authObject.provider.id = req.params.id
+
+  console.log(req)
   next();
   // const options = {
   //     code: req.body.code,
@@ -36,7 +39,7 @@ function retrieveUser(req, res, next) {
   const userToRetrieve = {
       user: req.authObject,
       // type: req.authObject.type -- orig version
-      type: req.authObject.provider
+      type: req.authObject.provider.type
   };
 
  AuthModule.createOrRetrieveUser(userToRetrieve, (err, user) => {
@@ -44,10 +47,18 @@ function retrieveUser(req, res, next) {
 
       // req.user = user;
       console.log(user)
-      if(user) return res.status(200).json({status: true});
-
-      return res.status(200).json({status: false});
+      if(user) {
+        return res.status(200).json({user: user, authenticated: true});
+      } else  {
+        return res.status(200).json({user: user, authenticated: false});
+      }
+      // if(user) {
+      //   cb(null, user);
+      // } else {
+      //   cb(null, false);
+      // }
   });
+  next();
 }
 // The last Middleware in the chain
 // reponsible for returning the generated token back to client

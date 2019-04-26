@@ -54,37 +54,47 @@ authSubject  =  new  BehaviorSubject(false);
   }
 
   loginWithFacebook() : Promise<any> {
+
+    var userID;
+    var token;
+    const permission = ['public_profile', 'email'];
+
     return new Promise((resolve, reject) => {
-      const permission = ['public_profile', 'email'];
       this.fb.login(permission)
         .then((fbres: FacebookLoginResponse) => {
             // this.showAlert("Loading. Please wait...");
-          let userID = fbres.authResponse.userID;
+          if(fbres.status == "Connected")
+          {
+            userID = fbres.authResponse.userID;
+            token = fbres.authResponse.accessToken
+          
           this.fb.api("/me?fields=name,email", permission)
           .then(res => {
               res.picture = "https://graph.facebook.com/" + userID + "/picture?type=large";
               res.logs = "https://graph.facebook.com/" + userID;
               
               let user = {
-                id : userID,
                 name : res.name,
                 picture: res.picture,
                 email: res.email,
-                provider: "facebook"
+                provider: {
+                  id : userID,
+                  type: "facebook"
+                }
               }
-
               resolve(user);
           })
           .catch(err => {
             reject(err);
           });
-          this.fb.logEvent(this.fb.EVENTS.EVENT_NAME_ADDED_TO_CART);
+        }
+        this.fb.logEvent(this.fb.EVENTS.EVENT_NAME_ADDED_TO_CART);
       });
     })
   }
 
   CreateOrRetrieveUser (user) : Observable<any> {
-        return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/user/${user.id}`, user).pipe(
+        return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/user/${user.provider.id}`, user).pipe(
           tap(async (res:any) => {
             this.authSubject.next(res);
           })

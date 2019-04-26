@@ -77,7 +77,7 @@ function createOrRetrieveUser(options, cb) {
         // No user is found, create new user
         // createUser(options.user, cb);
         
-        return cb(null, null);
+        return cb(null, false);
         
     });
 }
