@@ -7,23 +7,48 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { Storage } from  '@ionic/storage';
 import { User } from  './user';
 import { AuthResponse } from  './auth-response';
+import { } from '../../environments/environment';
+import { environment } from 'src/environments/environment';
+import { Platform } from 'ionic-angular';
+
+const TOKEN_KEY = 'auth-token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-// AUTH_SERVER_ADDRESS:  string  =  'https://app-ionic-server.herokuapp.com' ;
-AUTH_SERVER_ADDRESS:  string  =  'http://192.168.0.15:3000' ;
-authSubject  =  new  BehaviorSubject(false);
+AUTH_SERVER_ADDRESS:  string  =  environment.server_address
+authenticationState  =  new BehaviorSubject(false);
+
+dataSource = new BehaviorSubject<any[]>(<any[]>[]);
+currentData = this.dataSource.asObservable();
 
   constructor(
   private httpClient    : HttpClient, 
   private storage       : Storage,
   private nativeStorage : NativeStorage,
-  private fb            : Facebook)
+  private fb            : Facebook,
+  private platform      : Platform
+  )
   {
+    this.platform.ready().then(() => {
+      this.checkToken();
+    })
+  }
 
+  setData(data:any)
+  {
+    this.dataSource.next(data);
+  }
+
+  checkToken() {
+    this.storage.get(TOKEN_KEY).then((res) => {
+      if(res)
+      {
+        this.authenticationState.next(true);
+      }
+    });
   }
 
   login(user: User): Observable<AuthResponse> {
@@ -33,7 +58,7 @@ authSubject  =  new  BehaviorSubject(false);
         if (res.user) {
           await this.storage.set("ACCESS_TOKEN", res.user.access_token);
           await this.storage.set("EXPIRES_IN", res.user.expires_in);
-          this.authSubject.next(true);
+          this.authenticationState.next(true);
         }
       })
     );
@@ -46,7 +71,7 @@ authSubject  =  new  BehaviorSubject(false);
         if (res.user) {
           await this.storage.set("ACCESS_TOKEN", res.user.access_token);
           await this.storage.set("EXPIRES_IN", res.user.expires_in);
-          this.authSubject.next(true);
+          this.authenticationState.next(true);
         }
       })
 
@@ -66,13 +91,14 @@ authSubject  =  new  BehaviorSubject(false);
               res.logs = "https://graph.facebook.com/" + userID;
               
               let user = {
-                id : userID,
                 name : res.name,
                 picture: res.picture,
                 email: res.email,
-                provider: "facebook"
+                provider: {
+                  id : userID,
+                  type: "facebook"
+                }
               }
-
               resolve(user);
           })
           .catch(err => {
@@ -83,23 +109,31 @@ authSubject  =  new  BehaviorSubject(false);
     })
   }
 
-  CreateOrRetrieveUser (user) : Observable<any> {
-        return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/user/${user.id}`, user).pipe(
+  RetrieveUser (user) : Observable<any> {
+        return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/user/${user.provider.id}`, user).pipe(
           tap(async (res:any) => {
-            this.authSubject.next(res);
+            console.log(res);
+            this.authenticationState.next(res);
           })
         );
    }
 
+   CreateUser(user) : Observable<any>{
+    return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/user/new-user`, user).pipe(
+      tap(async (res:any) => {
+        if(res)  this.authenticationState.next(true);
+      })
+    );
+   }
+
   async logout() {
-    await this.storage.remove("ACCESS_TOKEN");
-    await this.storage.remove("EXPIRES_IN");
-    this.authSubject.next(false);
+    await this.nativeStorage.clear();
+    return this.storage.remove(TOKEN_KEY).then(() => {
+      this.authenticationState.next(false);
+    })
   }
 
   isLoggedIn() {
-    return this.authSubject.asObservable();
+    return this.authenticationState.asObservable();
   }
-
-
 }

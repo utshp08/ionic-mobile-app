@@ -53,6 +53,10 @@ export class LoginOptionPage implements OnInit {
     await loading.present();
   }
 
+  dismissAlert(){
+    this.loadingCtl.dismiss();
+  }
+
   ngOnInit() {
   }
   ionSlideDidLoad(){
@@ -64,26 +68,28 @@ export class LoginOptionPage implements OnInit {
   loginToFacebook()
   {
     this.authService.loginWithFacebook()
-    .then(res => {
-      let user = {
-        id: res.id,
-        name: res.name,
-        email: res.email,
-        picture: res.picture,
-        sex: res.user_gender,
-        bday: res.user_birthday,
-        provider: res.provider
-      }
-      this.nativeStorage.setItem('facebook_user', user);
-      this.authService.CreateOrRetrieveUser(user).subscribe(res => {
-        console.log(res.status)
-        if(!res.status)
-        {
-          this.route.navigate(["/profile"]);
-        } else {
-          this.route.navigate(["/login"]);
-        }
-      })
+    .then(user => {
+
+      //First, the app will check whether or not the user fb account is already registered
+      //If not, app will redirect to profile to complete for the info then save, If yes, 
+      //Server will accept the request and send token
+      //Response from the server will now be save on the native storage including the registered user info and token
+      this.showAlert("").then(() => {
+        this.authService.RetrieveUser(user).subscribe(res => {
+          //check if there is already registered user. If
+          console.log(res.status);
+          if(!res.status) // no, save facebook account of user, then
+          {
+            this.authService.setData(user);
+            this.route.navigate(["/profile"]); // navigate to profile page to save the new user. Else
+          } else {
+            console.log(res.user);
+            this.nativeStorage.setItem('logged_in_user', res.user);
+            this.route.navigate(["/home"]); // if there is already user account
+          }
+        });
+      }).finally(() => this.dismissAlert());
+
     })
     .catch(err => console.log(err));
   }

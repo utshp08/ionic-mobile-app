@@ -3,13 +3,14 @@ import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User } from './userModel';
+import { environment } from 'src/environments/environment';
  
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  public SERVER_ADDRESS = "http://192.168.0.15:3000";
+  public SERVER_ADDRESS = environment.server_address;
   constructor
   (
     private http      : Http

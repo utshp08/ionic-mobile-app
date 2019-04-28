@@ -1,21 +1,14 @@
-require('../model/user');
-require('../model/profile');
+const User              = require('../model/user');
+const jwt               = require('jsonwebtoken');
+const config            = require('../config/config');
 
-const mongoose = require(mongoose);
-const User = mongoose.model('User');
-const Profile = mongoose.model('Profile');
-
-exports.user_profile = (req, res) => {
-    
+function createToken(user) 
+{
+    return jwt.sign({id: user.provider.id, email: user.email}, config.jwtSercret, {
+        expiresIn: 200
+    });
 }
 
-exports.find(user) = (req, res) => {
-    User.findOne({_id: user.id}, (err, user) => {
-        if(err) throw err
-        if(user)
-        {
-            return user;
-        }
-        
-    })
+exports.registerUser = (req, res) => {
+    
 }

@@ -33,20 +33,20 @@ function facebookAuth(req, res, next) {
 function retrieveUser(req, res, next) {
   if(!req.authObject) return res.status(401).json({err: "Error while fetching user"});
 
-  const userToRetrieve = {
-      user: req.authObject,
-      // type: req.authObject.type -- orig version
-      type: req.authObject.provider
-  };
+  const userToRetrieve = req.authObject;
 
  AuthModule.createOrRetrieveUser(userToRetrieve, (err, user) => {
       if(err) return res.status(401).json({err: 'Error while fetching user'});
 
       // req.user = user;
-      console.log(user)
-      if(user) return res.status(200).json({status: true});
-
-      return res.status(200).json({status: false});
+      if(user) 
+      {
+        console.log(true);
+        return res.status(200).json({status: true});
+      } else {
+        console.log(false);
+        return res.status(200).json({status: false});
+      }
   });
 }
 // The last Middleware in the chain

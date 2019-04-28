@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  server_address:  "http://192.168.0.14:3000" || "https://app-ionic-server.herokuapp.com"
 };
 
 /*

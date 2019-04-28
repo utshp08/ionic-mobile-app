@@ -7,6 +7,7 @@ const port          = process.env.PORT || 3000;
 const path          = require('path');
 const multer        = require('multer');
 const dotenv        = require('dotenv');
+const config        = require('./config/config');
 
 const UPLOAD_PATH = 'uploads';
 
@@ -57,7 +58,7 @@ app.use(auth);
 //'mongodb+srv://utspantonia:secret123@cluster0-oguaj.mongodb.net/ifinder?retryWrites=true'
 //mongodb://localhost:27017/ionic-app,
 // process.env.MONGODB_URI
-mongoose.connect('mongodb://localhost:27017/ionic-app',
+mongoose.connect(config.db,
 {
     useNewUrlParser: true
 })

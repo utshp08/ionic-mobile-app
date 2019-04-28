@@ -6,7 +6,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { timer } from 'rxjs/internal/observable/timer';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Router } from '@angular/router';
-
+import { environment } from 'src/environments/environment';
+import { Facebook } from '@ionic-native/facebook/ngx';
+import { AuthService } from './auth/auth.service';
+ 
 
 @Component({
   selector: 'app-root',
@@ -15,7 +18,10 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
+  isLoggedIn = false;
+  user:any;
   showSplash = true;
+  SERVER_ADDRESS:String = environment.server_address;
   
   constructor(
     private platform: Platform,
@@ -23,11 +29,25 @@ export class AppComponent {
     private statusBar: StatusBar,
     private nativeStorage: NativeStorage,
     private router: Router,
+    private facebook: Facebook,
+    private authService: AuthService,
     modalCtr : ModalController
   ) {
     this.initializeApp();
     platform.ready().then(()=>{
       statusBar.styleDefault();
+      
+      //check whether there is already logged in user
+      this.nativeStorage.getItem('logged_in_user')
+      .then(data => {
+        console.log(data);
+        this.router.navigate(["/home"]);
+        this.splashScreen.hide();
+      }, err => {
+        this.router.navigate(["/login-option"]);
+        this.splashScreen.hide();
+      });
+
       this.splashScreen.hide();
 
       timer(3000).subscribe(() => this.showSplash = false) 
@@ -35,17 +55,6 @@ export class AppComponent {
       // let splash = modalCtr.create(splash).then(s => {
       //   s.present();
       // })
-    });
-
-    this.platform.ready().then(() => {
-      this.nativeStorage.getItem('facebook_user')
-      .then(data => {
-        // this.router.navigate(["/profile"]);
-        this.splashScreen.hide();
-      }, err => {
-        this.router.navigate(["/login-option"]);
-        this.splashScreen.hide();
-      });
     });
   }
 

@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  server_address: "https://app-ionic-server.herokuapp.com"
 };
