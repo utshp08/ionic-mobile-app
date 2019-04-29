@@ -22,12 +22,14 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { HttpModule } from '@angular/http';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import {NativeStorage} from '@ionic-native/native-storage/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [HttpModule, HttpClientModule, AuthModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
+    Geolocation,
     NativeStorage,
     Facebook,
     HTTP,

@@ -7,6 +7,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
 import { AuthService } from '../auth/auth.service';
+import { UserService } from '../providers/user/user.service';
 
 @Component({
   selector: 'app-login-option',
@@ -36,7 +37,8 @@ export class LoginOptionPage implements OnInit {
     private loadingCtl : LoadingController,
     private alertCtl : AlertController,
     private http: HTTP,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
     ) 
     { 
       
@@ -53,6 +55,10 @@ export class LoginOptionPage implements OnInit {
     await loading.present();
   }
 
+  dismissAlert(){
+    this.loadingCtl.dismiss();
+  }
+
   ngOnInit() {
   }
   ionSlideDidLoad(){
@@ -64,6 +70,7 @@ export class LoginOptionPage implements OnInit {
   loginToFacebook()
   {
     this.authService.loginWithFacebook()
+<<<<<<< HEAD
     .then(res => {
       let user = {
         name: res.name,
@@ -86,6 +93,30 @@ export class LoginOptionPage implements OnInit {
           this.nativeStorage.setItem('login_user', user);
         }
       })
+=======
+    .then(user => {
+
+      //First, the app will check whether or not the user fb account is already registered
+      //If not, app will redirect to profile to complete for the info then save, If yes, 
+      //Server will accept the request and send token
+      //Response from the server will now be save on the native storage including the registered user info and token
+      this.showAlert("").then(() => {
+        this.userService.RetrieveUser(user).subscribe(res => {
+          //check if there is already registered user. If
+          console.log("user:" + res.status);
+          if(!res.status) // no, save facebook account of user, then
+          {
+            this.route.navigate(["/profile"]); // navigate to profile page to save the new user. Else
+          } else {
+            console.log(res.user);
+            this.nativeStorage.setItem('logged_in_user', res.user);
+            this.route.navigate(["/location"]); // if there is already user account
+          }
+            this.userService.setData(res.user);
+        });
+      }).finally(() => this.dismissAlert());
+
+>>>>>>> b2b7bafb9926e67d65efa33c8bbe60489096b341
     })
     .catch(err => console.log(err));
   }

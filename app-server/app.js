@@ -7,6 +7,7 @@ const port          = process.env.PORT || 3000;
 const path          = require('path');
 const multer        = require('multer');
 const dotenv        = require('dotenv');
+const config        = require('./config/config');
 
 const UPLOAD_PATH = 'uploads';
 
@@ -15,6 +16,8 @@ dotenv.config({path: '.env'})
 /**
  * Load app modules and routes
  */
+const userLocationRoute = require('./routes/UserLocationRoutes');
+
 const AuthModule    = require('./config/AuthModule');
 const TokenService  = require('./config/TokenService');
 const authCtrl      = require('./controllers/AuthCtrl');
@@ -54,10 +57,7 @@ const auth = require('./routes/auth/AuthRoutes');
 app.use(auth);
 
 //Setup mongodb database with mongoose module
-//'mongodb+srv://utspantonia:secret123@cluster0-oguaj.mongodb.net/ifinder?retryWrites=true'
-//mongodb://localhost:27017/ionic-app,
-// process.env.MONGODB_URI
-mongoose.connect('mongodb://localhost:27017/ionic-app',
+mongoose.connect(config.db,
 {
     useNewUrlParser: true
 })
@@ -77,6 +77,9 @@ app.use((req, res, next) => {
 
     next();
 });
+
+
+app.use('/location', userLocationRoute);
 
 app.post('/auth/facebook',
     authCtrl.facebookAuth, authCtrl.retrieveUser, authCtrl.generateToken, (req, res) => {

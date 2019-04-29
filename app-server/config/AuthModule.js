@@ -55,14 +55,14 @@ function facebookAuthentication(options, cb) {
     // });
 }
 
-function createOrRetrieveUser(options, cb) {
+function createOrRetrieveUser(user, cb) {
     // select the query object based on the auth type
     //  const query = {
     //     [`profiles.${options.type}`]: options.user.profiles[options.type]
     // };
 
     const query = {
-        id : options.user.id
+        [`provider.id`]: user.provider.id
     };
     User.findOne(query, (err, user) => {
         if(err) {
@@ -73,12 +73,18 @@ function createOrRetrieveUser(options, cb) {
         // User found, return him to the callback
         if(user) {
             return cb(null, user);
+        } else {
+            return cb(null, false);
         }
         // No user is found, create new user
+<<<<<<< HEAD
         // createUser(options.user, cb);
         
         return cb(null, false);
+=======
+>>>>>>> b2b7bafb9926e67d65efa33c8bbe60489096b341
         
+        // return cb(null, null);
     });
 }
 // function createUser(user, cb) {
@@ -87,7 +93,14 @@ function createOrRetrieveUser(options, cb) {
 // }
 function createUser(user) {
     return new Promise((resolve) => {
-        const newUser = new User(user);
+        const newUser = new User();
+        newUser.name = user.name;
+        newUser.email = user.email;
+        newUser.picture = user.picture;
+        newUser.gender = user.gender;
+        newUser.birthday = user. birthday;
+        newUser.provider = user.provider;
+        console.log(newUser);
         newUser.save();
         resolve(newUser);
     })

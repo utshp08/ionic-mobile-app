@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import {IonSlides, ActionSheetController, AlertController, LoadingController, IonFab, IonFabButton } from '@ionic/angular';
+import {IonSlides, ActionSheetController, AlertController, LoadingController, IonFab, IonFabButton, IonDatetime } from '@ionic/angular';
 import { FormBuilder, Validators, FormGroup, MaxLengthValidator } from '@angular/forms';
 import { ImageProviderService } from '../image-provider.service';
 import {ImageService } from '../providers/image.service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Router } from '@angular/router';
 import { UserService } from '../providers/user/user.service';
+import { environment } from 'src/environments/environment';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,6 +19,7 @@ export class ProfilePage implements OnInit {
 
   @ViewChild(IonSlides) slides: IonSlides;
   @ViewChild(IonFabButton) fabButton: IonFabButton;
+  @ViewChild(IonDatetime) bdate:IonDatetime;
 
   slideOpts = { 
     effect: 'flip', 
@@ -24,7 +27,7 @@ export class ProfilePage implements OnInit {
    };
    lock = false;
 
-   public SERVER_ADDRESS = "https://app-ionic-server.herokuapp.com"
+   public SERVER_ADDRESS = environment.server_address
    public step : number =  0.2;
    public default: string = "../../assets/icon/avatar.png";
    public profilePic;
@@ -33,28 +36,27 @@ export class ProfilePage implements OnInit {
    public genderType;
    public male:String;
    public female:String;
-
-  public base64Image: string;
+  public base64Image: String;
+  private imageFilePath:String;
   public name:String;
   public email:String;
   public sex:String;
   public bday:Date
-  private provider:String;
+  private provider:{};
 
   constructor(
     public actionSheet: ActionSheetController,
-    // public imagePicker: ImagePicker,
     public formBuilder : FormBuilder,
-    // public camera: Camera,
     public alertCtl : AlertController,
-    // public webview : WebView,
     private imageProvider: ImageProviderService,
     private loadingCtl : LoadingController,
     private nativeStorage: NativeStorage,
     private router: Router,
     private imgService: ImageService,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
     )
+<<<<<<< HEAD
     {
       this.nativeStorage.getItem('login_user')
       .then(data => {
@@ -71,8 +73,18 @@ export class ProfilePage implements OnInit {
         this.router.navigate(["/login-option"])
       })
     }
+=======
+    { }
+>>>>>>> b2b7bafb9926e67d65efa33c8bbe60489096b341
 
   ngOnInit() {
+    this.userService.currentUser.subscribe(data => {
+      this.name = data["name"];
+        this.email = data["email"];
+        this.base64Image = data["picture"];
+        this.provider = data["provider"];
+        this.uploaded = true;
+    });
     this.male = "tertiary";
     this.female = "tertiary";
   }
@@ -133,14 +145,7 @@ async imageSelect()
         //Load image service that handles operation for selecting images from the gallery
         this.imgService.loadImageFromGallery().then(data => {
           this.base64Image = data.image;
-          //Image provider handles uploading of images to the server
-          this.imageProvider.uploadPic(data.filepath)
-          .then(() => {
-            this.showLoading("Uploading image");
-            this.uploaded = true;
-            console.log("uploaded")
-            this.dismissLoading();
-          })   
+          this.imageFilePath = data.filepath
         });
       }
     }, {
@@ -151,15 +156,7 @@ async imageSelect()
         this.imgService.showImageFromCamera()
         .then(data => {
           this.base64Image = data.image;
-
-          this.showLoading("Uploading image");
-
-          this.imageProvider.uploadPic(data.filepath)
-          .then(()=>{
-            this.uploaded = true;
-            console.log("uploaded")
-            this.dismissLoading();
-          });
+          this.imageFilePath = data.filepath;
         })
       }
     }]
@@ -169,15 +166,32 @@ async imageSelect()
 
 saveNewUser()
 {
-  this.userService.saveNewUser({
+  let newUser = {
     name: this.name,
     email: this.email,
     picture: this.base64Image,
     gender: this.genderType,
-    birthday: this.bday,
+    birthday: this.bdate.value,
     provider: this.provider
-  }).subscribe(res => {
-    console.log(res);
+  }
+  console.log(newUser);
+  this.userService.CreateUser(newUser).subscribe(res => {
+    if(res.status)
+    {
+      this.nativeStorage.setItem("logged_in_user", newUser).then(user =>{
+          //Image provider handles uploading of images to the server
+          this.showLoading("Uploading image").then(() => {
+            this.imageProvider.uploadPic(this.imageFilePath)
+            .then(() => {
+              this.uploaded = true;
+            });
+          }).finally(() => {
+            this.dismissLoading();
+            this.router.navigate(["/location"]);
+            this.userService.setData(newUser);
+          });
+      });
+    }
   })
 }
 
