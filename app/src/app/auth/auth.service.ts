@@ -111,17 +111,6 @@ authenticationState  =  new BehaviorSubject(false);
     })
   }
 
-<<<<<<< HEAD
-  CreateOrRetrieveUser (user) : Observable<any> {
-        return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/user/${user.provider.id}`, user).pipe(
-          tap(async (res:any) => {
-            this.authSubject.next(res);
-          })
-        );
-   }
-
-=======
->>>>>>> b2b7bafb9926e67d65efa33c8bbe60489096b341
   async logout() {
     await this.nativeStorage.clear();
     return this.storage.remove(TOKEN_KEY).then(() => {
