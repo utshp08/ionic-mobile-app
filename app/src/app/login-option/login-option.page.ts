@@ -70,30 +70,6 @@ export class LoginOptionPage implements OnInit {
   loginToFacebook()
   {
     this.authService.loginWithFacebook()
-<<<<<<< HEAD
-    .then(res => {
-      let user = {
-        name: res.name,
-        email: res.email,
-        picture: res.picture,
-        sex: res.user_gender,
-        bday: res.user_birthday,
-        provider: {
-          id: res.id,
-          type: res.provider
-        }
-      }
-      this.authService.CreateOrRetrieveUser(user).subscribe(res => {
-        console.log(res.status)
-        if(!res.authenticated)
-        {
-          this.route.navigate(["/profile"]);
-        } else {
-          this.route.navigate(["/login"]);
-          this.nativeStorage.setItem('login_user', user);
-        }
-      })
-=======
     .then(user => {
 
       //First, the app will check whether or not the user fb account is already registered
@@ -116,7 +92,6 @@ export class LoginOptionPage implements OnInit {
         });
       }).finally(() => this.dismissAlert());
 
->>>>>>> b2b7bafb9926e67d65efa33c8bbe60489096b341
     })
     .catch(err => console.log(err));
   }

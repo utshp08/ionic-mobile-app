@@ -56,26 +56,7 @@ export class ProfilePage implements OnInit {
     private userService: UserService,
     private authService: AuthService
     )
-<<<<<<< HEAD
-    {
-      this.nativeStorage.getItem('login_user')
-      .then(data => {
-        this.base64Image = data.picture;
-        this.name = data.name;
-        this.email = data.email;
-        this.sex = data.sex,
-        this.bday = data.bday
-        this.provider = "facebook"
-        console.log(data);
-        this.uploaded = true;
-      })
-      .catch(err => {
-        this.router.navigate(["/login-option"])
-      })
-    }
-=======
     { }
->>>>>>> b2b7bafb9926e67d65efa33c8bbe60489096b341
 
   ngOnInit() {
     this.userService.currentUser.subscribe(data => {
