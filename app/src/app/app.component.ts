@@ -41,7 +41,7 @@ export class AppComponent {
       this.nativeStorage.getItem('logged_in_user')
       .then(data => {
         console.log(data);
-        this.router.navigate(["/home"]);
+        this.router.navigate(["/location"]);
         this.splashScreen.hide();
       }, err => {
         this.router.navigate(["/login-option"]);

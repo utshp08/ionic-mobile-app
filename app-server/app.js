@@ -16,6 +16,8 @@ dotenv.config({path: '.env'})
 /**
  * Load app modules and routes
  */
+const userLocationRoute = require('./routes/UserLocationRoutes');
+
 const AuthModule    = require('./config/AuthModule');
 const TokenService  = require('./config/TokenService');
 const authCtrl      = require('./controllers/AuthCtrl');
@@ -75,6 +77,9 @@ app.use((req, res, next) => {
 
     next();
 });
+
+
+app.use('/location', userLocationRoute);
 
 app.post('/auth/facebook',
     authCtrl.facebookAuth, authCtrl.retrieveUser, authCtrl.generateToken, (req, res) => {

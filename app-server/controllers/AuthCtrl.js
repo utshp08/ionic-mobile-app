@@ -42,10 +42,10 @@ function retrieveUser(req, res, next) {
       if(user) 
       {
         console.log(true);
-        return res.status(200).json({status: true});
+        return res.status(200).json({user:user, status: true});
       } else {
         console.log(false);
-        return res.status(200).json({status: false});
+        return res.status(200).json({user:user, status: false});
       }
   });
 }

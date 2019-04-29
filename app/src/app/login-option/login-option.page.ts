@@ -7,6 +7,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
 import { AuthService } from '../auth/auth.service';
+import { UserService } from '../providers/user/user.service';
 
 @Component({
   selector: 'app-login-option',
@@ -36,7 +37,8 @@ export class LoginOptionPage implements OnInit {
     private loadingCtl : LoadingController,
     private alertCtl : AlertController,
     private http: HTTP,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
     ) 
     { 
       
@@ -75,18 +77,18 @@ export class LoginOptionPage implements OnInit {
       //Server will accept the request and send token
       //Response from the server will now be save on the native storage including the registered user info and token
       this.showAlert("").then(() => {
-        this.authService.RetrieveUser(user).subscribe(res => {
+        this.userService.RetrieveUser(user).subscribe(res => {
           //check if there is already registered user. If
-          console.log(res.status);
+          console.log("user:" + res.status);
           if(!res.status) // no, save facebook account of user, then
           {
-            this.authService.setData(user);
             this.route.navigate(["/profile"]); // navigate to profile page to save the new user. Else
           } else {
             console.log(res.user);
             this.nativeStorage.setItem('logged_in_user', res.user);
-            this.route.navigate(["/home"]); // if there is already user account
+            this.route.navigate(["/location"]); // if there is already user account
           }
+            this.userService.setData(res.user);
         });
       }).finally(() => this.dismissAlert());
 

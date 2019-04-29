@@ -7,7 +7,6 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { Storage } from  '@ionic/storage';
 import { User } from  './user';
 import { AuthResponse } from  './auth-response';
-import { } from '../../environments/environment';
 import { environment } from 'src/environments/environment';
 import { Platform } from 'ionic-angular';
 
@@ -21,8 +20,6 @@ export class AuthService {
 AUTH_SERVER_ADDRESS:  string  =  environment.server_address
 authenticationState  =  new BehaviorSubject(false);
 
-dataSource = new BehaviorSubject<any[]>(<any[]>[]);
-currentData = this.dataSource.asObservable();
 
   constructor(
   private httpClient    : HttpClient, 
@@ -37,10 +34,6 @@ currentData = this.dataSource.asObservable();
     })
   }
 
-  setData(data:any)
-  {
-    this.dataSource.next(data);
-  }
 
   checkToken() {
     this.storage.get(TOKEN_KEY).then((res) => {
@@ -108,23 +101,6 @@ currentData = this.dataSource.asObservable();
       });
     })
   }
-
-  RetrieveUser (user) : Observable<any> {
-        return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/user/${user.provider.id}`, user).pipe(
-          tap(async (res:any) => {
-            console.log(res);
-            this.authenticationState.next(res);
-          })
-        );
-   }
-
-   CreateUser(user) : Observable<any>{
-    return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/user/new-user`, user).pipe(
-      tap(async (res:any) => {
-        if(res)  this.authenticationState.next(true);
-      })
-    );
-   }
 
   async logout() {
     await this.nativeStorage.clear();

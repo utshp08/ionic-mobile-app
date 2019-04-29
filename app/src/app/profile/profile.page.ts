@@ -53,12 +53,13 @@ export class ProfilePage implements OnInit {
     private nativeStorage: NativeStorage,
     private router: Router,
     private imgService: ImageService,
+    private userService: UserService,
     private authService: AuthService
     )
     { }
 
   ngOnInit() {
-    this.authService.currentData.subscribe(data => {
+    this.userService.currentUser.subscribe(data => {
       this.name = data["name"];
         this.email = data["email"];
         this.base64Image = data["picture"];
@@ -155,7 +156,7 @@ saveNewUser()
     provider: this.provider
   }
   console.log(newUser);
-  this.authService.CreateUser(newUser).subscribe(res => {
+  this.userService.CreateUser(newUser).subscribe(res => {
     if(res.status)
     {
       this.nativeStorage.setItem("logged_in_user", newUser).then(user =>{
@@ -167,8 +168,8 @@ saveNewUser()
             });
           }).finally(() => {
             this.dismissLoading();
-            this.router.navigate(["/home"]);
-            this.authService.setData(newUser);
+            this.router.navigate(["/location"]);
+            this.userService.setData(newUser);
           });
       });
     }
