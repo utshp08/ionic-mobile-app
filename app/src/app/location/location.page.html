@@ -1,3 +1,33 @@
-<ion-content padding>
-  <ion-button (click)="enable_location()">Enable Location</ion-button>
+<ion-content>
+  <div class="outer-wrapper">
+      <div class="wrapper">
+        <div class="spinner_outer" *ngIf="finding_location">
+      </div>
+    </div>
+      <div class="wrapper">
+          <div class="spinner_inner" *ngIf="finding_location"></div>
+      </div>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            
+          </ion-col>
+        </ion-row>
+        <ion-row class="middle">
+          <ion-col align-self-center>
+            <ion-icon name="locate" size="large"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-align-center>
+            <h3 name="title">{{title}}</h3>
+            <p name="msg">{{msg}}</p>
+            <ion-fab vertical="center" color="tertiary" horizontal="center" >
+              <ion-fab-button color="tertiary" no-shadow (click)="checkDeviceGps()" *ngIf="location_error"><ion-icon name="refresh" size="large"></ion-icon></ion-fab-button>
+            </ion-fab>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+</div>
+
 </ion-content>

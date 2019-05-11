@@ -33,8 +33,10 @@ export class UserService {
 RetrieveUser (user) : Observable<any> {
     return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/user/${user.provider.id}`, user).pipe(
       tap(async (res:any) => {
-        console.log(res);
-        this.dataSource.next(res);
+        if(res.status)
+        {
+          this.dataSource.next(res);
+        }
       })
     );
 }

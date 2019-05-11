@@ -93,6 +93,7 @@ authenticationState  =  new BehaviorSubject(false);
                 }
               }
               resolve(user);
+              console.log(user)
           })
           .catch(err => {
             reject(err);

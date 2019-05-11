@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'password-reset', loadChildren: './resetpassword/resetpass.module#ResetpassPageModule'},
   { path: 'login-option', loadChildren: './login-option/login-option.module#LoginOptionPageModule' },
   { path: 'register-mobile', loadChildren: './register-mobile/register-mobile.module#RegisterMobilePageModule' },
-  { path: 'location', loadChildren: './location/location.module#LocationPageModule' }
+  { path: 'location', loadChildren: './location/location.module#LocationPageModule'}
 ];
 
 @NgModule({

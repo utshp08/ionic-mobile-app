@@ -31,14 +31,12 @@ export class LocationService {
   }
 
   sendCurrentPosition(data): Observable<any>{
-    this.userService.currentUser.subscribe(user => {
-      console.log("current user" + user);
-      data._id = user["_id"];
-    });
-    console.log(data);
     return this.http.post(`${this.SERVER_ADDRESS}/location/new`, data).pipe(
       tap(async (res) => {
-        await this.dataSource.next(res);
+        if(res) 
+        {
+          await this.dataSource.next(res);
+        }
       })
     );
   }

@@ -79,7 +79,7 @@ app.use((req, res, next) => {
 });
 
 
-app.use('/location', userLocationRoute);
+app.use(userLocationRoute);
 
 app.post('/auth/facebook',
     authCtrl.facebookAuth, authCtrl.retrieveUser, authCtrl.generateToken, (req, res) => {

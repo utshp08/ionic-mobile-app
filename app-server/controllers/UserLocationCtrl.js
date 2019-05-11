@@ -1,35 +1,35 @@
-require('../model/user_location');
+require('../model/UserLocationModel');
 const mongoose          =require('mongoose');
 const UserLocation      =mongoose.model('UserLocation');
 
-exports.newLocation = (req, res) => {
-    console.log(req.body._id)
-    UserLocation.findById(req.body._id, (err, location) => {
+exports.new_location = (req, res) => {
+    UserLocation.findOne({user: req.body.userid}, (err, location) => {
         if(!location)
-        {
-            newLocation = new UserLocation({
-                position : {
-                    longitude : req.longitude,
-                    latitude : req.latitude
+        {   
+            data = {
+                user : req.body.userid,
+                position:{
+                    longitude: req.body.longitude,
+                    latitude: req.body.latitude
                 }
-            })
-            .save()
+            }
+            console.log("No user location yet");
+            ul = new UserLocation(data).save()
             .then(() => {
                 console.log("New Location save")
             })
             .catch(err => console.log(err));
 
         } else {
-            newLocation = new UserLocation({
-                position : {
-                    longitude : req.longitude,
-                    latitude : req.latitude
-                }
+            console.log("User location found");
+            location.updateOne({
+                longitude: req.body.longitude,
+                latitude: req.body.latitude
             })
-            .update()
             .then(() => {
                 console.log("Location updated")
             })
+            .catch(err => console.log(err))
         }
     })
 }

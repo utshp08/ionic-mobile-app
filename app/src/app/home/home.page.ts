@@ -11,7 +11,6 @@ import { NativeStorage} from '@ionic-native/native-storage/ngx';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  user;
   constructor(private  authService:  AuthService, private  router:  Router, private nativeStroge: NativeStorage)
   {
     if(!this.authService.isLoggedIn())

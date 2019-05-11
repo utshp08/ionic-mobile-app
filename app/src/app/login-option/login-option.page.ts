@@ -8,6 +8,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
 import { AuthService } from '../auth/auth.service';
 import { UserService } from '../providers/user/user.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login-option',
@@ -38,7 +39,8 @@ export class LoginOptionPage implements OnInit {
     private alertCtl : AlertController,
     private http: HTTP,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private navCtl  : NavController
     ) 
     { 
       
@@ -72,6 +74,7 @@ export class LoginOptionPage implements OnInit {
     this.authService.loginWithFacebook()
     .then(user => {
 
+      this.userService.setData(user);
       //First, the app will check whether or not the user fb account is already registered
       //If not, app will redirect to profile to complete for the info then save, If yes, 
       //Server will accept the request and send token
@@ -79,16 +82,16 @@ export class LoginOptionPage implements OnInit {
       this.showAlert("").then(() => {
         this.userService.RetrieveUser(user).subscribe(res => {
           //check if there is already registered user. If
-          console.log("user:" + res.status);
           if(!res.status) // no, save facebook account of user, then
           {
-            this.route.navigate(["/profile"]); // navigate to profile page to save the new user. Else
+            this.navCtl.navigateForward(["/profile"]);
+            // this.route.navigate(["/profile"]); // navigate to profile page to save the new user. Else
           } else {
             console.log(res.user);
             this.nativeStorage.setItem('logged_in_user', res.user);
-            this.route.navigate(["/location"]); // if there is already user account
+            // this.route.navigate(["/location"]); // if there is already user account
+            this.navCtl.navigateForward(["/location"]);
           }
-            this.userService.setData(res.user);
         });
       }).finally(() => this.dismissAlert());
 
