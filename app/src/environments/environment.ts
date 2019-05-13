@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  server_address:  "http://192.168.0.14:3000" || "https://app-ionic-server.herokuapp.com"
+  server_address:  "http://172.17.1.21:3000" || "https://app-ionic-server.herokuapp.com"
 };
 
 /*
