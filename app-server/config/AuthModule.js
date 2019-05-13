@@ -1,7 +1,7 @@
 // config/AuthModule.js
 'use strict';
 const request   = require('request');
-const User      = require('../model/user');
+const User      = require('../model/UserModel');
 
 module.exports = {
     createUser,

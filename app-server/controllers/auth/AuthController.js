@@ -1,4 +1,4 @@
-require('../../model/user');
+require('../../model/UserModel');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const bcrypt = require('bcryptjs');

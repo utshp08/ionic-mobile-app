@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -23,12 +23,14 @@ import { HttpModule } from '@angular/http';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import {NativeStorage} from '@ionic-native/native-storage/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [HttpModule, HttpClientModule, AuthModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
+    Diagnostic,
     Geolocation,
     NativeStorage,
     Facebook,

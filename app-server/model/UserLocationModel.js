@@ -2,15 +2,15 @@ const mongoose       =require('mongoose');
 const Schema         =mongoose.Schema;
 
 const UserLocationSchema = new Schema({
+    user: { type: Schema.Types.ObjectId, ref: 'User'},
     position: {
-        longhitude: {
+        longitude: {
             type: String
         },
         latitude: {
             type: String
         }
-    },
-    user_id: { type: mongoose.Schema.Types.ObjectId }
+    }
 })
 
 module.exports = mongoose.model("UserLocation", UserLocationSchema);

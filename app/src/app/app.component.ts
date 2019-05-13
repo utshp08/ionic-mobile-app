@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform, ModalController } from '@ionic/angular';
+import { Platform, ModalController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { timer } from 'rxjs/internal/observable/timer';
@@ -28,6 +28,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private nativeStorage: NativeStorage,
+    private navCtl : NavController,
     private router: Router,
     private facebook: Facebook,
     private authService: AuthService,
@@ -41,16 +42,18 @@ export class AppComponent {
       this.nativeStorage.getItem('logged_in_user')
       .then(data => {
         console.log(data);
-        this.router.navigate(["/location"]);
         this.splashScreen.hide();
+        // this.router.navigate(["/location"]);
+        this.navCtl.navigateForward(["/location"]);
       }, err => {
-        this.router.navigate(["/login-option"]);
         this.splashScreen.hide();
+        // this.router.navigate(["/login-option"]);
+        this.navCtl.navigateForward(["/login-option"]);
       });
 
       this.splashScreen.hide();
 
-      timer(3000).subscribe(() => this.showSplash = false) 
+      timer(2000).subscribe(() => this.showSplash = false) 
 
       // let splash = modalCtr.create(splash).then(s => {
       //   s.present();
