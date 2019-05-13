@@ -38,12 +38,8 @@
     "@ionic/angular": "4.1.0",
     "@ionic/pro": "2.0.4",
     "@ionic/storage": "2.2.0",
-<<<<<<< HEAD
-    "cordova-android": "7.1.4",
-=======
     "cordova-android": "^7.1.4",
     "cordova-android-support-gradle-release": "^3.0.0",
->>>>>>> 71952445c92815231fc27783821b372cf491b46a
     "cordova-browser": "5.0.4",
     "cordova-plugin-advanced-http": "^2.0.8",
     "cordova-plugin-camera": "^4.0.3",
