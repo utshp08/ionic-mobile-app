@@ -48,7 +48,7 @@ export class AppComponent {
       }, err => {
         this.splashScreen.hide();
         // this.router.navigate(["/login-option"]);
-        this.navCtl.navigateForward(["/login-option"]);
+        this.navCtl.navigateForward(["/home"]);
       });
 
       this.splashScreen.hide();

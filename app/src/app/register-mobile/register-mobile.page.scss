@@ -37,11 +37,10 @@ ion-toolbar {
 }
 .gradbackgound {
   background: linear-gradient(155.21deg, #F78340 0%, #F24058 100%);
-    background-size: 1800% 1800%;
-    animation: rainbow 20s linear infinite;
-    height: 100%;
-    padding-top: 60px;
-    display: block;
+  background-size: 1800% 1800%;
+  // animation: rainbow 20s linear infinite;
+  height: 100%;
+  display: block;
 }
   // @keyframes rainbow {
   //   0% {

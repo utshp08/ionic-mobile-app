@@ -12,10 +12,45 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-  <ion-list-header>
-    Users
-  </ion-list-header>
-  <!-- <ion-item *ngFor="let user of users">{{ user.name }}</ion-item> -->
-</ion-list>
+  <div class="gradbackgound" padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div swing-stack #myStack [stackConfig]="stackConfig "id="card-stack" (throwoutleft)="voteUp(true)" (throwoutright)="voteUp(false)">
+          <div #myCard swing-card *ngFor="let c of cards.reverse()" >
+            <ion-card padding>
+                <ion-card-content>
+                    <ion-item>
+                      <ion-avatar slot="start">
+                        <img src="{{c.picture.thumbnail}}"/>
+                      </ion-avatar>
+                      <div>
+                        <ion-card-title slot="end">{{c.name.first}} {{c.name.last}}</ion-card-title>
+                        <ion-card-subtitle slot="end">{{c.email}}</ion-card-subtitle>
+                      </div>
+                    </ion-item>
+                    <ion-item>
+                      <img src="{{c.picture.large}}">
+                    </ion-item>
+                  </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+          <div>
+              <ion-fab-button [@itemState] color="tertiary" no-shadow><ion-icon  name="heart" (click) = "clickUp(true)"></ion-icon></ion-fab-button>
+              <ion-fab-button [@itemState] color="tertiary" no-shadow><ion-icon  name="close" (click) = "clickUp(false)"></ion-icon></ion-fab-button>
+          </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p>{{recentCard}}</p>
+      </ion-col>
+    </ion-row>
+</ion-grid>
+</div>
 </ion-content>

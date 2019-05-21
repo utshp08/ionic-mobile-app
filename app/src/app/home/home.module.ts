@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Http } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { HomePage } from './home.page';
 import { HttpModule } from '@angular/http';
+import {SwingModule} from 'angular2-swing';
+import { NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
   imports: [
+    SwingModule,
     HttpModule,
     CommonModule,
     FormsModule,

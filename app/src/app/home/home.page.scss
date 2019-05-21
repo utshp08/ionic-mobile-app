@@ -1,1 +1,29 @@
+#card-stack {
+    width: 95%;
+    height: 370px;
+    margin: 0 auto 0;
+    position: relative;
+  }
+  #card-stack div{
+      position: absolute;
+      top: 3%;
+      width: 100%;
+  }
+  #card-stack div ion-card{
+    border-radius: 5px;
+    text-align: center;
+    background: #ffffff;
+    padding: 0;
+    min-height: 200px;
+  }
+  #card-stack div:first-child{
+    top: 0%;
+  }
 
+  .gradbackgound {
+    background: linear-gradient(155.21deg, #F78340 0%, #F24058 100%);
+    background-size: 1800% 1800%;
+    // animation: rainbow 20s linear infinite;
+    height: 100%;
+    display: block;
+  }

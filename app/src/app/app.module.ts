@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -13,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {LoadingController, App, Config, Platform,AlertController, DomController, Keyboard} from 'ionic-angular';
 
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
@@ -25,12 +26,13 @@ import {NativeStorage} from '@ionic-native/native-storage/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [HttpModule, HttpClientModule, AuthModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserAnimationsModule, HttpModule, HttpClientModule, AuthModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
-    Diagnostic,
+        Diagnostic,
     Geolocation,
     NativeStorage,
     Facebook,
@@ -50,7 +52,7 @@ import { Diagnostic } from '@ionic-native/diagnostic/ngx';
     LoadingController,
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  { provide: RouteReuseStrategy , useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })

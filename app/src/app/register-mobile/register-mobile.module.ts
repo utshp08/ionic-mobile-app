@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
 import { RegisterMobilePage } from './register-mobile.page';
+import { NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 const routes: Routes = [
   {
@@ -16,11 +17,15 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule,
+    CommonModule,ReactiveFormsModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [RegisterMobilePage]
+  declarations: [RegisterMobilePage],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
+  ]
 })
 export class RegisterMobilePageModule {}

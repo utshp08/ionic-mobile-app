@@ -36,33 +36,12 @@ function facebookAuth(req, res, next) {
 function retrieveUser(req, res, next) {
   if(!req.authObject) return res.status(401).json({err: "Error while fetching user"});
 
-<<<<<<< HEAD
-  const userToRetrieve = {
-      user: req.authObject,
-      // type: req.authObject.type -- orig version
-      type: req.authObject.provider.type
-  };
-=======
   const userToRetrieve = req.authObject;
->>>>>>> b2b7bafb9926e67d65efa33c8bbe60489096b341
 
  AuthModule.createOrRetrieveUser(userToRetrieve, (err, user) => {
       if(err) return res.status(401).json({err: 'Error while fetching user'});
 
       // req.user = user;
-<<<<<<< HEAD
-      console.log(user)
-      if(user) {
-        return res.status(200).json({user: user, authenticated: true});
-      } else  {
-        return res.status(200).json({user: user, authenticated: false});
-      }
-      // if(user) {
-      //   cb(null, user);
-      // } else {
-      //   cb(null, false);
-      // }
-=======
       if(user) 
       {
         console.log(true);
@@ -71,7 +50,6 @@ function retrieveUser(req, res, next) {
         console.log(false);
         return res.status(200).json({user:user, status: false});
       }
->>>>>>> b2b7bafb9926e67d65efa33c8bbe60489096b341
   });
   next();
 }

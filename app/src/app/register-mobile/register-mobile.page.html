@@ -21,9 +21,10 @@
           <ion-col padding-top margin-top >
                   <ion-input type="number" required placeholder="999 000 0000" [(ngModel)]="phonenumber">
               <ion-chip >
-                  <ion-select  placeholder="" [(ngModel)]="countrycode">
-                      <ion-select-option value="f">Female</ion-select-option>
-                      <ion-select-option value="m">Male</ion-select-option>
+                  <ion-select  [interfaceOptions]="customActionSheetOptions" interface="action-sheet" [(ngModel)]="countrycode" placeholder="Select Country">
+                      <ion-select-option *ngFor="let c of countries" title="Select Country" >
+                        {{c.name}} (+{{c.callingCodes}}) <img src="{{c.flag}}" />
+                      </ion-select-option>
                     </ion-select>
               </ion-chip>
                   </ion-input>
